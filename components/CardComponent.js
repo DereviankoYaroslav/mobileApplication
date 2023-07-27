@@ -1,5 +1,7 @@
-import { View, Text } from 'react-native'
+import { View, Text, Pressable, StyleSheet, Animated } from 'react-native'
 import React, { useState } from 'react'
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+import { RectButton } from 'react-native-gesture-handler';
 
 const CardComponent = (props) => {
     const [counter, setCounter] = useState(0);
@@ -13,7 +15,7 @@ const CardComponent = (props) => {
           props.words.words[i] = props.words.words[j];
           props.words.words[j] = temp;
         }
-        console.log(props.words.words);
+        //console.log(props.words.words);
         if (check === true) {
             setContent(props.words.words[counter].eng);
         } else {
@@ -47,8 +49,8 @@ const CardComponent = (props) => {
         if(counter < props.words.words.length-1){
             plus = counter+1;
             setCounter(plus);
-            console.log(plus);
-            console.log(check);
+            //console.log(plus);
+            //console.log(check);
             if (check === true) {
                 setContent(props.words.words[plus].eng);
             } else {
@@ -75,10 +77,10 @@ const CardComponent = (props) => {
     };
 
     const lessonsBar = (id) => {
-        console.log(id);
+        //console.log(id);
         let myEl = document.getElementById(id);
         myEl.classList.toggle('hidden');
-        console.log(myEl);
+        //console.log(myEl);
         let myToggle = document.getElementsByClassName('toggle-icon-' + props.words.lesson);
         for (let i = 0; i < myToggle.length; i++){
             myToggle[i].classList.toggle('hidden');
@@ -87,14 +89,57 @@ const CardComponent = (props) => {
 
     return (
         <View>
-            <Text onPress={minusHandler}>Prev</Text>
-            <Text onPress={clickHandler}>{content}</Text>
-            <Text onPress={plusHandler}>Next</Text>
-            <Text onPress={shuffleArray}>Shuffle</Text>
+            <View>
+                <Pressable style={styles.card} onPress={clickHandler}>
+                    <Text style={styles.cardText}>{content}</Text>
+                </Pressable>
+                <View style={styles.buttonsRow}>
+                    <Pressable style={styles.button} onPress={minusHandler}>
+                        <Text>Prev</Text>
+                    </Pressable>
+                    <Pressable style={styles.button} onPress={shuffleArray}>
+                        <Text>Shuffle</Text>
+                    </Pressable>
+                    <Pressable style={styles.button} onPress={plusHandler}>
+                        <Text>Next</Text>
+                    </Pressable>
+                </View>
+            </View>
         </View>
     );
 }
 
 export default CardComponent
+
+const styles = StyleSheet.create({
+    card: {
+        width: 'auto',
+        height: 300,
+        marginHorizontal: 20,
+        borderRadius: 20,
+        alignItems:'center',
+        backgroundColor: '#737375',
+        justifyContent: 'center'
+    },
+    cardText:{
+        fontSize: 45,
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
+    buttonsRow: {
+        marginTop: 20,
+        flexDirection: 'row',
+        justifyContent: 'space-evenly'
+    },
+    button: {
+        backgroundColor: '#49965645',
+        padding: 5,
+        borderRadius: 10
+    },
+    buttonsText: {
+        fontSize: 25,
+        fontStyle: 'italic',
+    }
+  });
 
 

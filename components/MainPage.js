@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Movies from './Movies';
 
 const MainPage = () => {
 
@@ -11,6 +12,7 @@ const MainPage = () => {
         <Text style={styles.element}>Item 1</Text>
         <Text style={styles.element}>Item 1</Text>
         <Text style={styles.element}>Item 2</Text>
+        <Movies></Movies>
     </ScrollView>
   );
 };
