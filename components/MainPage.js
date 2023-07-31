@@ -29,8 +29,9 @@ const getData = async () => {
 
 const MainPage = () => {
 
-  const [number, onChangeNumber] = React.useState('');
-  const [myNumber, onChangeMyNumber] = React.useState([]);
+  const [eng, onChangeEng] = React.useState('');
+  const [ukr, onChangeUkr] = React.useState('');
+  const [myNumber, onChangeMyNumber] = React.useState([{eng: 'a', ukr: 'b'}]);
 
   return (
     <ScrollView style={styles.container}>
@@ -40,21 +41,25 @@ const MainPage = () => {
         <Movies></Movies>
         <TextInput
         style={styles.input}
-        onChangeText={onChangeNumber}
-        value={number}
+        onChangeText={onChangeEng}
+        value={eng}
         placeholder="useless placeholder"
-        keyboardType="numeric"
+        keyboardType='default'
         />
         <TextInput
         style={styles.input}
-        onChangeText={onChangeNumber}
-        value={number}
+        onChangeText={onChangeUkr}
+        value={ukr}
         placeholder="useless placeholder"
-        keyboardType="numeric"
+        keyboardType='default'
         />
-        <Pressable onPress={() => {myNumber.push(number); storeData(myNumber)}}><Text>Set Value</Text></Pressable>
-        <Pressable onPress={async () => onChangeMyNumber(await getData())}><Text>Get Value</Text></Pressable>
-        <Text style={styles.testNumber}>{myNumber.toString()}</Text>
+        <Pressable onPress={() => {let obj = {eng: eng, ukr: ukr}; myNumber.push(obj); console.log(myNumber); storeData(myNumber)}}><Text>Set Value</Text></Pressable>
+        <Pressable onPress={async () => {myNumber ? onChangeMyNumber(await getData()) : "Nothing to get"; console.log(myNumber)}}><Text>Get Value</Text></Pressable>
+        <View>{myNumber.map(item => {
+          return(
+          <Text style={styles.testNumber}>{item.eng}</Text>
+          )
+        })}</View>
     </ScrollView>
   );
 };
@@ -81,4 +86,3 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   }
 });
-
