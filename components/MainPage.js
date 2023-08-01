@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Movies from './Movies';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 
 const storeData = async (value) => {
   try {
@@ -27,11 +27,21 @@ const getData = async () => {
   }
 };
 
+
 const MainPage = () => {
+
+  const fetchData = useCallback(async()=> {
+    onChangeMyNumber(await getData());
+  }, [])
+  
+  useEffect(() => {
+    fetchData()
+  }, [fetchData]);
+
 
   const [eng, onChangeEng] = React.useState('');
   const [ukr, onChangeUkr] = React.useState('');
-  const [myNumber, onChangeMyNumber] = React.useState([{eng: 'a', ukr: 'b'}]);
+  const [myNumber, onChangeMyNumber] = React.useState([{eng: 'Example', ukr: 'Приклад'}]);
 
   return (
     <ScrollView style={styles.container}>

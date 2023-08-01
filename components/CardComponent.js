@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { RectButton } from 'react-native-gesture-handler';
 
-const CardComponent = (props) => {
+const CardComponent = (props, { navigation }) => {
     const [counter, setCounter] = useState(0);
     const [content, setContent] = useState(props.words.words[counter].eng);
     const [check, setCheck] = useState(true);

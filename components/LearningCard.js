@@ -1,6 +1,10 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { Component } from 'react'
 import CardComponent from './CardComponent';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import LessonsMenu from './LessonsMenu';
+import CustomWords from './CustomWords';
 
 const wordsToLearn1 = {
   words: [
@@ -77,11 +81,25 @@ const wordsToLearn1 = {
 ],
 lesson: 1};
 
-const LearningCard  = () => {
+const Stack = createNativeStackNavigator();
+
+const LearningCard  = ({ navigation }) => {
+
     return (
-      <View style={styles.container}>
-        <CardComponent words={wordsToLearn1}></CardComponent>
-      </View>
+      <NavigationContainer independent={true}>
+        <View style={styles.container}>
+          <Stack.Navigator initialRouteName="Menu">
+          <Stack.Screen name="Menu" component={LessonsMenu}></Stack.Screen>
+            <Stack.Screen name="Lesson 1">
+              {(words) => <CardComponent words={wordsToLearn1}/>}
+            </Stack.Screen>
+            <Stack.Screen name="Lesson 2">
+              {(words) => <CardComponent words={wordsToLearn1}/>}
+            </Stack.Screen>
+            <Stack.Screen name="Custom Words" component={CustomWords}></Stack.Screen>
+          </Stack.Navigator>
+        </View>
+      </NavigationContainer>
     )
 };
 
