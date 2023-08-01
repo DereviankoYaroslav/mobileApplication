@@ -88,8 +88,8 @@ const LearningCard  = ({ navigation }) => {
     return (
       <NavigationContainer independent={true}>
         <View style={styles.container}>
-          <Stack.Navigator initialRouteName="Menu">
-          <Stack.Screen name="Menu" component={LessonsMenu}></Stack.Screen>
+          <Stack.Navigator initialRouteName="Lessons Menu">
+          <Stack.Screen name="Lessons Menu" component={LessonsMenu}></Stack.Screen>
             <Stack.Screen name="Lesson 1">
               {(words) => <CardComponent words={wordsToLearn1}/>}
             </Stack.Screen>

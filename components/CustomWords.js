@@ -20,7 +20,7 @@ const storeData = async (value) => {
 const getData = async () => {
   try {
     const jsonValue = await AsyncStorage.getItem('my-words');
-    console.log(jsonValue);
+    console.log('getting' + jsonValue);
     return jsonValue != null ? JSON.parse(jsonValue) : null;
   } catch (e) {
     // error reading value
@@ -31,21 +31,22 @@ const getData = async () => {
 const CustomWords = ({navigation}) => {
 
   const fetchData = useCallback(async()=> {
+    setContent('Example');
     const data = await getData();
-    data ? onChangeMyNumber(data) : onChangeMyNumber([{eng: 'Example', ukr: 'Приклад'}])
+    data.length ? onChangeMyNumber(data) : onChangeMyNumber([{eng: 'Example', ukr: 'Приклад'}]);
   }, [])
   
   useEffect(() => {
     fetchData()
   }, [fetchData]);
 
-
   const [eng, onChangeEng] = React.useState('');
   const [ukr, onChangeUkr] = React.useState('');
-  const [myNumber, onChangeMyNumber] = React.useState([{eng: 'Example', ukr: 'Приклад'}]);
+  const [myNumber, onChangeMyNumber] = React.useState([{}]);
   const [elementVisible, setElementVisible] = useState(false);
+  const [cardVisible, setCardVisible] = useState(true);
 
-  const [counter, setCounter] = useState(0);
+    const [counter, setCounter] = useState(0);
     const [content, setContent] = useState(myNumber[counter].eng);
     const [check, setCheck] = useState(true);
 
@@ -117,28 +118,68 @@ const CustomWords = ({navigation}) => {
         }
     };
 
+    const deleteCard = () => {
+        if (myNumber.length > 1){
+        myNumber.splice(counter,1);
+        console.log('ctn' + counter);
+        console.log(myNumber);
+        plus = 0;
+            setCounter(plus);
+            if (check === true) {
+                setContent(myNumber[plus].eng);
+            } else {
+                setContent(myNumber[plus].ukr);
+            }
+        } else {
+            myNumber.splice(counter,1);
+            const obj = [{eng: 'Example', ukr: 'Приклад'}];
+            onChangeMyNumber([{eng: 'Example', ukr: 'Приклад'}]);
+            plus = 0;
+            setCounter(plus);
+            if (check === true) {
+                setContent(obj[plus].eng);
+            } else {
+                setContent(obj[plus].ukr);
+            }
+        }
+        storeData(myNumber);
+    }
+
   return (
     <ScrollView style={styles.container}>
-        <Pressable onPress={() => setElementVisible(!elementVisible)}><Text>Add Words to Cards</Text></Pressable>
+        <View style={styles.upButtonsRow}>
+            <Pressable style={styles.addButton} onPress={() => {setCardVisible(!cardVisible)}}>
+                <Text>
+                    <Ionicons name={'albums-outline'} size={30} color={'black'} />
+                </Text>
+            </Pressable>
+            <Pressable style={styles.showCardButton} onPress={() => setElementVisible(!elementVisible)}>
+                <Text>
+                    <Ionicons name={'add-circle-outline'} size={30} color={'black'} />
+                </Text>
+            </Pressable>
+        </View>
         {elementVisible ? (
         <View>
+            <Text style={styles.addWords}>Add Word</Text>
             <TextInput
             style={styles.input}
             onChangeText={onChangeEng}
             value={eng}
-            placeholder="useless placeholder"
+            placeholder="Word in English"
             keyboardType='default'
             />
             <TextInput
             style={styles.input}
             onChangeText={onChangeUkr}
             value={ukr}
-            placeholder="useless placeholder"
+            placeholder="Word in Ukrainian"
             keyboardType='default'
             />
-            <Pressable onPress={() => {let obj = {eng: eng, ukr: ukr}; myNumber.push(obj); console.log(myNumber); storeData(myNumber)}}><Text>Set Value</Text></Pressable>
+            <Pressable style={styles.saveButton} onPress={() => {let obj = {eng: eng, ukr: ukr}; myNumber.push(obj); console.log(myNumber); storeData(myNumber); alert('Saved')}}><Text style={styles.saveButtonText}>Save</Text></Pressable>
             {/* <Pressable onPress={async () => {myNumber ? onChangeMyNumber(await getData()) : "Nothing to get"; console.log(myNumber)}}><Text>Get Value</Text></Pressable> */}
         </View>) : null}
+        {cardVisible && myNumber.length ? (
         <View>
             <View>
                 <Pressable style={styles.card} onPress={clickHandler}>
@@ -156,6 +197,17 @@ const CustomWords = ({navigation}) => {
                     </Pressable>
                 </View>
             </View>
+        </View>) : null}
+        <View style={styles.upButtonsRow}>
+            <Pressable style={styles.deleteButton} onPress={deleteCard}>
+                <Text>
+                </Text>
+            </Pressable>
+            <Pressable style={styles.addButton} onPress={deleteCard}>
+                <Text>
+                    <Ionicons name={'trash-outline'} size={30} color={'black'} />
+                </Text>
+            </Pressable>
         </View>
     </ScrollView>
   );
@@ -186,6 +238,7 @@ const styles = StyleSheet.create({
         width: 'auto',
         height: 300,
         marginHorizontal: 20,
+        marginTop: 20,
         borderRadius: 20,
         alignItems:'center',
         backgroundColor: '#737375',
@@ -209,5 +262,49 @@ const styles = StyleSheet.create({
     buttonsText: {
         fontSize: 25,
         fontStyle: 'italic',
+    },
+    addButton: {
+        marginTop: 20,
+        width: 'auto',
+        alignSelf: 'flex-end',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#49494946c'
+    },
+    addWords: {
+        fontSize: 20,
+        textAlign: 'center'
+    },
+    saveButton:{
+        backgroundColor: '#49965645',
+        padding: 5,
+        borderRadius: 10,
+        alignItems: 'center',
+        width: 'auto',
+        alignSelf: 'center'
+    },
+    saveButtonText: {
+        textAlign: 'center'
+    },
+    showCardButton: {
+        marginTop: 20,
+        width: 'auto',
+        alignSelf: 'flex-start',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#49494946c'
+    },
+    upButtonsRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginHorizontal: 20
+    },
+    deleteButton: {
+        marginTop: 20,
+        width: 'auto',
+        alignSelf: 'flex-end',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#49494946c'
     }
 });

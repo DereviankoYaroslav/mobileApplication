@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
         width: 'auto',
         height: 300,
         marginHorizontal: 20,
+        marginTop: 20,
         borderRadius: 20,
         alignItems:'center',
         backgroundColor: '#737375',

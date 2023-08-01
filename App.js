@@ -31,11 +31,11 @@ const App = () => {
           },
           tabBarActiveTintColor: 'green',
           tabBarInactiveTintColor: 'gray',
-          tabBarLabelPosition: 'beside-icon'
+          tabBarLabelPosition: 'beside-icon',
         })}
       >
-        <Tab.Screen options={{title: "Home"}} name='Home' component={MainPage}></Tab.Screen>
-        <Tab.Screen name='Cards' component={LearningCard}></Tab.Screen>
+        <Tab.Screen options={{title: "Home", headerShown: false}} name='Home' component={MainPage}></Tab.Screen>
+        <Tab.Screen name='Cards' component={LearningCard} options={{headerShown: false}}></Tab.Screen>
         <Tab.Screen name='Tests' component={Tests}></Tab.Screen>
       </Tab.Navigator>
     </NavigationContainer>
