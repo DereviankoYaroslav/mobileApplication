@@ -4,7 +4,7 @@ import React from 'react'
 const Tests = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.element}>Tests</Text>
+      <Text style={styles.element}>Tab for tests</Text>
     </View>
   )
 }
@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
       backgroundColor: '#fff',
     },
     element: {
-      alignSelf: 'center'
+      alignSelf: 'center',
+      fontSize: 20
     }
   });

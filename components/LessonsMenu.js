@@ -1,4 +1,4 @@
-import { View, Text, Pressable } from 'react-native'
+import { View, Text, Pressable, StyleSheet, ScrollView} from 'react-native'
 import React from 'react'
 import CardComponent from './CardComponent';
 import CustomWords from './CustomWords';
@@ -6,18 +6,29 @@ import CustomWords from './CustomWords';
 const LessonsMenu = ({navigation}) => {
 
     return (
-        <View>
-            <Pressable onPress={() => navigation.navigate('Lesson 1')}>
-                <Text>Lesson 1</Text>
+        <ScrollView>
+            <Pressable style={styles.element} onPress={() => navigation.navigate('Animals')}>
+                <Text style={styles.elementText}>Animals</Text>
             </Pressable>
-            <Pressable onPress={() => navigation.navigate('Lesson 2')}>
-                <Text>Lesson 2</Text>
+            <Pressable style={styles.element} onPress={() => navigation.navigate('Nature')}>
+                <Text style={styles.elementText}>Nature</Text>
             </Pressable>
-            <Pressable onPress={() => navigation.navigate('Custom Words')}>
-                <Text>Custom Words</Text>
+            <Pressable style={styles.element} onPress={() => navigation.navigate('Custom Words')}>
+                <Text style={styles.elementText}>Custom Words</Text>
             </Pressable>
-        </View>
+        </ScrollView>
     )
 }
 
 export default LessonsMenu
+
+const styles = StyleSheet.create({
+    element: {
+      alignSelf: 'center',
+      marginVertical: 20
+    },
+    elementText: {
+        textAlign: 'center',
+        fontSize: 20
+    }
+  });
