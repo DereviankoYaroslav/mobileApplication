@@ -1,7 +1,6 @@
 import { View, Text, Pressable, StyleSheet, Animated } from 'react-native'
 import React, { useState } from 'react'
-import Swipeable from 'react-native-gesture-handler/Swipeable';
-import { RectButton } from 'react-native-gesture-handler';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const CardComponent = (props, { navigation }) => {
     const [counter, setCounter] = useState(0);
@@ -95,13 +94,13 @@ const CardComponent = (props, { navigation }) => {
                 </Pressable>
                 <View style={styles.buttonsRow}>
                     <Pressable style={styles.button} onPress={minusHandler}>
-                        <Text>Prev</Text>
+                        <Text><Ionicons name={'chevron-back-circle-outline'} size={40} color={'black'} /></Text>
                     </Pressable>
                     <Pressable style={styles.button} onPress={shuffleArray}>
-                        <Text>Shuffle</Text>
+                        <Text><Ionicons name={'sync-circle-outline'} size={40} color={'black'} /></Text>
                     </Pressable>
                     <Pressable style={styles.button} onPress={plusHandler}>
-                        <Text>Next</Text>
+                        <Text><Ionicons name={'chevron-forward-circle-outline'} size={40} color={'black'} /></Text>
                     </Pressable>
                 </View>
             </View>
@@ -133,7 +132,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly'
     },
     button: {
-        backgroundColor: '#49965645',
         padding: 5,
         borderRadius: 10
     },

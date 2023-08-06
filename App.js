@@ -26,7 +26,6 @@ const App = () => {
               iconName = focused ? 'clipboard' : 'clipboard-outline';
             }
 
-            // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
           },
           tabBarActiveTintColor: 'green',
@@ -36,7 +35,7 @@ const App = () => {
       >
         <Tab.Screen options={{title: "Home", headerShown: false}} name='Home' component={MainPage}></Tab.Screen>
         <Tab.Screen name='Cards' component={LearningCard} options={{headerShown: false}}></Tab.Screen>
-        <Tab.Screen name='Tests' component={Tests}></Tab.Screen>
+        <Tab.Screen name='Tests' component={Tests} options={{headerShown: false}}></Tab.Screen>
       </Tab.Navigator>
     </NavigationContainer>
     </>

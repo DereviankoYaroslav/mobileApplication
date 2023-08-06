@@ -1,24 +1,21 @@
 import { View, Text, Pressable, StyleSheet, ScrollView} from 'react-native'
 import React from 'react'
 
-const LessonsMenu = ({navigation}) => {
+const TestsMenu = ({navigation}) => {
 
     return (
         <ScrollView>
+            <Pressable style={styles.element} onPress={() => navigation.navigate('Weather')}>
+                <Text style={styles.elementText}>Weather</Text>
+            </Pressable>
             <Pressable style={styles.element} onPress={() => navigation.navigate('Animals')}>
                 <Text style={styles.elementText}>Animals</Text>
-            </Pressable>
-            <Pressable style={styles.element} onPress={() => navigation.navigate('Nature')}>
-                <Text style={styles.elementText}>Nature</Text>
-            </Pressable>
-            <Pressable style={styles.element} onPress={() => navigation.navigate('Custom Words')}>
-                <Text style={styles.elementText}>Custom Words</Text>
             </Pressable>
         </ScrollView>
     )
 }
 
-export default LessonsMenu
+export default TestsMenu
 
 const styles = StyleSheet.create({
     element: {
