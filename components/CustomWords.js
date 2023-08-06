@@ -146,7 +146,7 @@ const CustomWords = ({navigation}) => {
     }
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
         <View style={styles.upButtonsRow}>
             <Pressable style={styles.addButton} onPress={() => {setCardVisible(!cardVisible)}}>
                 <Text>
@@ -176,7 +176,7 @@ const CustomWords = ({navigation}) => {
             placeholder="Word in Ukrainian"
             keyboardType='default'
             />
-            <Pressable style={styles.saveButton} onPress={() => {let obj = {eng: eng, ukr: ukr}; myNumber.push(obj); console.log(myNumber); storeData(myNumber); alert('Saved')}}><Text style={styles.saveButtonText}>Save</Text></Pressable>
+            <Pressable style={styles.saveButton} onPress={() => {let obj = {eng: eng, ukr: ukr}; myNumber.push(obj); console.log(myNumber); storeData(myNumber); alert('Saved')}}><Text><Ionicons name={'checkmark-circle-outline'} size={30} /></Text></Pressable>
             {/* <Pressable onPress={async () => {myNumber ? onChangeMyNumber(await getData()) : "Nothing to get"; console.log(myNumber)}}><Text>Get Value</Text></Pressable> */}
         </View>) : null}
         {cardVisible && myNumber.length ? (
@@ -209,7 +209,7 @@ const CustomWords = ({navigation}) => {
                 </Text>
             </Pressable>
         </View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -275,7 +275,6 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     saveButton:{
-        backgroundColor: '#49965645',
         padding: 5,
         borderRadius: 10,
         alignItems: 'center',

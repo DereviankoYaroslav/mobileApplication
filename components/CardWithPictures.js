@@ -2,6 +2,7 @@ import { useEffect, useState} from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+let bgColor = 'green';
 
 const CardWithPictures = (props) => {
 
@@ -12,6 +13,10 @@ const CardWithPictures = (props) => {
     const [counter, setCounter] = useState(0);
     const [content, setContent] = useState(props.words.imgs[counter]);
     const [vars, setVars] = useState([]);
+    const [ isPressOne, setIsPressOne ] = useState(true);
+    const [ isPressTwo, setIsPressTwo ] = useState(false);
+    const [ isPressThree, setIsPressThree ] = useState(false);
+    const [ isPressFour, setIsPressFour ] = useState(false);
 
     const shuffleArray = () => {
         for (let i = props.words.imgs.length - 1; i > 0; i--) {
@@ -25,6 +30,7 @@ const CardWithPictures = (props) => {
         }
         setContent(props.words.imgs[counter]);
         variantsShuffle(counter);
+        zeroingAll();
     };
 
     const minusHandler = () => {
@@ -38,6 +44,7 @@ const CardWithPictures = (props) => {
             setContent(props.words.imgs[minus]);
         }
         variantsShuffle(minus);
+        zeroingAll();
     };
 
     const plusHandler = () => {
@@ -52,27 +59,17 @@ const CardWithPictures = (props) => {
             setContent(props.words.imgs[plus]);
         }
         variantsShuffle(plus);
+        zeroingAll();
     };
 
-    const colorChanger = (e) => {
-        let id = 'congrats-' + props.words.topic.toLowerCase().split(' ').join('-');
-        let congrats = document.getElementById(id);
-        let whitening = document.getElementsByClassName('variant');
-        for (let i = 0; i < whitening.length; i++){
-            whitening[i].style.color = 'aliceblue';
-        }
-        if(e.target.innerHTML === props.words.answears[counter]){
-            e.target.style.color = 'green';
-            congrats.innerHTML = `<span class='${props.words.topic.toLowerCase().split(' ').join('-')}'>Correct!</span>`;
-            congrats.style.color = 'green';
-            congrats.style.fontSize = '40px';
-            congrats.style.fontWeight = 'bold';
+    const correctChecking = (variant) => {
+        if(props.words.answears[counter] == variant){
+            console.log('Correct');
+            bgColor = 'green';
         } 
         else{
-            e.target.style.color = 'red';
-            congrats.innerHTML = `<span class='${props.words.topic.toLowerCase().split(' ').join('-')}'>Try Another</span>`;
-            congrats.style.color = 'red';
-            congrats.style.fontSize = '35px';
+            console.log('Wrong');
+            bgColor = 'red';
         }
     };
 
@@ -91,38 +88,72 @@ const CardWithPictures = (props) => {
         let arr = [...mySet];
         arr.sort((a, b) => 0.5 - Math.random());
         setVars(arr);
+        zeroingAll();
     };
 
+    const zeroingButtonsExOne = () => {
+        setIsPressTwo(false);
+        setIsPressThree(false);
+        setIsPressFour(false);
+    }
+
+    const zeroingButtonsExTwo = () => {
+        setIsPressOne(false);
+        setIsPressThree(false);
+        setIsPressFour(false);
+    }
+
+    const zeroingButtonsExThree = () => {
+        setIsPressOne(false);
+        setIsPressTwo(false);
+        setIsPressFour(false);
+    }
+
+    const zeroingButtonsExFour = () => {
+        setIsPressOne(false);
+        setIsPressTwo(false);
+        setIsPressThree(false);
+    }
+
+    const zeroingAll = () => {
+        setIsPressOne(false);
+        setIsPressTwo(false);
+        setIsPressThree(false);
+        setIsPressFour(false);
+    }
+
     return (
-        <View>
-                <Image
-                    style={styles.myImage}
-                    source={{
-                    uri: `${content}`,
-                    }}
-                />
-                <View style={styles.buttonsRow}>
-                    <Pressable style={styles.button} onPress={minusHandler}>
-                        <Text><Ionicons name={'chevron-back-circle-outline'} size={40} color={'black'} /></Text>
-                    </Pressable>
-                    <Pressable style={styles.button} onPress={shuffleArray}>
-                        <Text><Ionicons name={'sync-circle-outline'} size={40} color={'black'} /></Text>
-                    </Pressable>
-                    <Pressable style={styles.button} onPress={plusHandler}>
-                        <Text><Ionicons name={'chevron-forward-circle-outline'} size={40} color={'black'} /></Text>
-                    </Pressable>
-                </View>
-                <View>
-                    <Text style={styles.question}>{props.words.question}</Text>
-                </View>
-                <View style={styles.variantsRow}>
-                    <Pressable><Text onClick={colorChanger}>{vars[0]}</Text></Pressable>
-                    <Pressable><Text onClick={colorChanger}>{vars[1]}</Text></Pressable>
-                </View>
-                <View style={styles.variantsRow}>
-                    <Pressable><Text onClick={colorChanger}>{vars[2]}</Text></Pressable>
-                    <Pressable><Text onClick={colorChanger}>{vars[3]}</Text></Pressable>
-                </View>
+        <View style={styles.container}>
+            <View style={styles.contentView}>
+                    <Image
+                        style={styles.myImage}
+                        source={{
+                        uri: `${content}`,
+                        }}
+                    />
+                    <View style={styles.buttonsRow}>
+                        <Pressable style={styles.button} onPress={minusHandler}>
+                            <Text><Ionicons name={'chevron-back-circle-outline'} size={40} color={'black'} /></Text>
+                        </Pressable>
+                        <Pressable style={styles.button} onPress={shuffleArray}>
+                            <Text><Ionicons name={'sync-circle-outline'} size={40} color={'black'} /></Text>
+                        </Pressable>
+                        <Pressable style={styles.button} onPress={plusHandler}>
+                            <Text><Ionicons name={'chevron-forward-circle-outline'} size={40} color={'black'} /></Text>
+                        </Pressable>
+                    </View>
+                    <View>
+                        <Text style={styles.question}>{props.words.question}</Text>
+                    </View>
+                    <View style={styles.variantsRow}>
+                        <Pressable style={[styles.variant, {backgroundColor: isPressOne ? `${bgColor}` : '#fff'}]} onPress={() => {correctChecking(vars[0]); setIsPressOne(!isPressOne); zeroingButtonsExOne()}}><Text style={styles.variantText}>{vars[0]}</Text></Pressable>
+                        <Pressable style={[styles.variant, {backgroundColor: isPressTwo ? `${bgColor}` : '#fff'}]} onPress={() => {correctChecking(vars[1]); setIsPressTwo(!isPressTwo); zeroingButtonsExTwo()}}><Text style={styles.variantText}>{vars[1]}</Text></Pressable>
+                    </View>
+                    <View style={styles.variantsRow}>
+                        <Pressable style={[styles.variant, {backgroundColor: isPressThree ? `${bgColor}` : '#fff'}]} onPress={() => {correctChecking(vars[2]); setIsPressThree(!isPressThree); zeroingButtonsExThree()}}><Text style={styles.variantText}>{vars[2]}</Text></Pressable>
+                        <Pressable style={[styles.variant, {backgroundColor: isPressFour ? `${bgColor}` : '#fff'}]} onPress={() => {correctChecking(vars[3]); setIsPressFour(!isPressFour); zeroingButtonsExFour()}}><Text style={styles.variantText}>{vars[3]}</Text></Pressable>
+                    </View>
+            </View>
         </View>
     );
 }
@@ -135,18 +166,11 @@ const styles = StyleSheet.create({
       backgroundColor: '#fff',
       justifyContent: 'center'
     },
-    card: {
-      alignItems:'center',
-    },
-    welcomeText: {
-      fontSize: 50,
-      fontWeight: 'bold',
-      alignSelf: 'center',
-      textAlign: 'center'
-    },
     myImage: {
       width: 'auto',
-      height: 200
+      height: 300,
+      marginHorizontal: 20,
+      borderRadius: 20,
     },
     buttonsRow: {
         marginTop: 20,
@@ -165,5 +189,17 @@ const styles = StyleSheet.create({
         marginTop: 20,
         flexDirection: 'row',
         justifyContent: 'space-around'
+    },
+    variant: {
+        width: 150,
+        height: 40,
+        justifyContent: 'center',
+        borderRadius: 5,
+        borderColor: '#000',
+        borderWidth: 2.5
+    },
+    variantText: {
+        textAlign: 'center',
+        fontSize: 15
     }
   });
